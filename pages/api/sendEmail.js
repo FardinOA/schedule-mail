@@ -19,7 +19,7 @@ export default function handler(req, res) {
 
         data.forEach(async (ele) => {
             try {
-                const job = await cron.schedule(`${ele.SendDate}`, () => {
+                const job = cron.schedule(`${ele.SendDate}`, () => {
                     console.log(process.env.SMPT_MAIL);
                     const mailOptions = {
                         from: process.env.SMPT_MAIL,
@@ -33,7 +33,6 @@ export default function handler(req, res) {
                             console.log(error);
                         } else {
                             console.log("Email sent: " + info.response);
-                            job.stop();
                         }
                     });
                 });
@@ -42,6 +41,7 @@ export default function handler(req, res) {
                 console.log("schedule error", error);
             }
         });
+        console.log("here finallay");
         // res.status(200).json({ message: "all email are scheduled" });
     } catch (error) {
         console.log("error", error);
