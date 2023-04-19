@@ -26,7 +26,9 @@ export default function Home() {
 
     const submitHandeler = async (e) => {
         e.preventDefault();
-        await axios.post("/api/sendEmail", excelData);
+
+        const res = await axios.post("/api/sendEmail", excelData);
+        console.log(res);
         alert("All Email are Scheduled");
         setExcelData([]);
     };
