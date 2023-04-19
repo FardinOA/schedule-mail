@@ -1,12 +1,13 @@
 import axios from "axios";
 import { Inter } from "next/font/google";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 import readXlsxFile from "read-excel-file";
 export default function Home() {
     const [excelData, setExcelData] = useState([]);
-
+    const router = useRouter();
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         readXlsxFile(file).then((rows) => {
@@ -30,7 +31,7 @@ export default function Home() {
         const res = await axios.post("/api/sendEmail", excelData);
         console.log(res);
         alert("All Email are Scheduled");
-        setExcelData([]);
+        router.reload();
     };
 
     return (

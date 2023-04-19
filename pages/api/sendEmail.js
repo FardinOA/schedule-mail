@@ -24,6 +24,7 @@ export default function handler(req, res) {
                         subject: ele.EmailSubject,
                         text: ele.EmailBody,
                     });
+                    console.log(mail);
                 } catch (error) {
                     console.error("sending email error", error);
                 }
