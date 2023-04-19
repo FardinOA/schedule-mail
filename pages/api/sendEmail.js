@@ -17,25 +17,30 @@ export default function handler(req, res) {
         const data = req.body;
         let resData = [];
 
-        data.forEach((ele) => {
-            const job = cron.schedule(`${ele.SendDate}`, () => {
-                console.log(process.env.SMPT_MAIL);
-                const mailOptions = {
-                    from: process.env.SMPT_MAIL,
-                    to: ele.Email,
-                    subject: ele.EmailSubject,
-                    text: ele.EmailBody,
-                };
+        data.forEach(async (ele) => {
+            try {
+                const job = await cron.schedule(`${ele.SendDate}`, () => {
+                    console.log(process.env.SMPT_MAIL);
+                    const mailOptions = {
+                        from: process.env.SMPT_MAIL,
+                        to: ele.Email,
+                        subject: ele.EmailSubject,
+                        text: ele.EmailBody,
+                    };
 
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log("Email sent: " + info.response);
-                        job.stop();
-                    }
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log("Email sent: " + info.response);
+                            job.stop();
+                        }
+                    });
                 });
-            });
+                console.log(ele);
+            } catch (error) {
+                console.log("schedule error", error);
+            }
         });
         // res.status(200).json({ message: "all email are scheduled" });
     } catch (error) {
