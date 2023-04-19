@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer";
 import cron from "node-cron";
-import schedule from "node-schedule";
 const transporter = nodemailer.createTransport({
     host: process.env.SMPT_HOST,
     port: 465,
@@ -15,32 +14,6 @@ const transporter = nodemailer.createTransport({
 export default function handler(req, res) {
     try {
         const data = req.body;
-        let resData = [];
-
-        // data.forEach(async (ele) => {
-        //     try {
-        //         const job = cron.schedule(`${ele.SendDate}`, () => {
-        //             console.log(process.env.SMPT_MAIL);
-        //             const mailOptions = {
-        //                 from: process.env.SMPT_MAIL,
-        //                 to: ele.Email,
-        //                 subject: ele.EmailSubject,
-        //                 text: ele.EmailBody,
-        //             };
-
-        //             transporter.sendMail(mailOptions, (error, info) => {
-        //                 if (error) {
-        //                     console.log(error);
-        //                 } else {
-        //                     console.log("Email sent: " + info.response);
-        //                 }
-        //             });
-        //         });
-        //         console.log(ele);
-        //     } catch (error) {
-        //         console.log("schedule error", error);
-        //     }
-        // });
 
         data.forEach((ele) => {
             cron.schedule(`${ele.SendDate}`, async () => {
