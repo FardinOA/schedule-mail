@@ -33,6 +33,7 @@ export default function Home() {
         console.log(res);
         alert("All Email are Scheduled");
         setExcelData(null);
+        router.reload();
     };
 
     return (
