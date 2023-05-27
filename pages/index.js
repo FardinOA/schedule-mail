@@ -92,7 +92,7 @@ export default function Home() {
                         disabled={excelData ? false : true}
                         className={` ${
                             !excelData && " hover:cursor-wait "
-                        } bg-[#37CDBE] py-2 rounded-md focus:outline-none w-full max-w-xs transition-all hover:text-white hover:bg-[#218679] `}
+                        } bg-[#37CDBE] py-2 rounded-md focus:outline-none w-full max-w-xs transition-all hover:bg-[#218679] `}
                     >
                         Submit
                     </button>
